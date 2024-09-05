@@ -20,7 +20,6 @@ function createTaskCard(task) {
     if (task.status !== "done") {
         dueStatus = getStatus(task.date);
     }
-    console.log(dueStatus)
     let card = $(`
     <div class="card task-card my-3 w-75 drag" data-id=${task.id} 
     ${dueStatus !== "" ? dueStatus === "overdue" ? "style='background-color: red; color: white'" : "style='background-color: orange; color: white'": ""}>
@@ -39,8 +38,7 @@ function createTaskCard(task) {
 
 function getStatus(dueDate) {
     const today = dayjs().format("MM/DD/YYYY");
-    let daysLeft = dayjs(dueDate, "MM/DD/YYYY").diff(dayjs(today), 'day')
-    console.log(daysLeft)
+    let daysLeft = dayjs(dueDate, "MM/DD/YYYY").diff(dayjs(today), 'day');
     return daysLeft < 0 ? "overdue" : daysLeft <=5 ? "approaching" : "";
 }
 
@@ -102,9 +100,7 @@ function handleDeleteTask(event) {
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {
     // update task status in local storage
-    console.log($(event.target).attr("id"));
-    console.log($(ui.draggable[0]).attr("data-id"));
-
+   
     for(task of taskList){
         if (task.id == $(ui.draggable[0]).attr("data-id")){
             task.status = $(event.target).attr("id");
